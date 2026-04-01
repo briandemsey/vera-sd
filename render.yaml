@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: vera-sd
+    runtime: python
+    buildCommand: pip install -r requirements.txt && python init_db.py
+    startCommand: streamlit run app.py --server.port $PORT --server.headless true --server.enableCORS false
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11"
