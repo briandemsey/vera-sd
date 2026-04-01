@@ -343,12 +343,12 @@ def get_all_type4_flags(threshold=0.5):
     """Flag Type 4 candidates where Speaking exceeds Writing by threshold.
     WIDA scale uses 0.5 as equivalent to CA's 8-point threshold."""
     query = """
-        SELECT district_name, district_id, county, grade, subgroup,
-               speaking_score, writing_score,
-               (speaking_score - writing_score) as delta
+        SELECT w.district_name, w.district_id, d.county, w.grade, w.subgroup,
+               w.speaking_score, w.writing_score,
+               (w.speaking_score - w.writing_score) as delta
         FROM wida_results w
         JOIN districts d ON w.district_id = d.district_id
-        WHERE (speaking_score - writing_score) >= ?
+        WHERE (w.speaking_score - w.writing_score) >= ?
         ORDER BY delta DESC
     """
     return run_query(query, [threshold])
